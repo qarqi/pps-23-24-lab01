@@ -1,6 +1,7 @@
 package tdd;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents a list of integers, with a built-in iterator that is bidirectional and circular.
@@ -44,4 +45,11 @@ public interface CircularList {
      * Note the first one is the first added to the list.
      */
     void reset();
+
+    /**
+     * Searchs for next element matching the given condition.
+     * If no element is found, it returns and empty Optional.
+     */
+    Optional filteredNext(Predicate<Integer> condition);
+
 }
