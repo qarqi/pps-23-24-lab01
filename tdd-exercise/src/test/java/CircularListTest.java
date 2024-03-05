@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CircularListTest {
 
-    CircularListImpl list = new CircularListImpl();
+    CircularListImpl sut;
     Predicate<Integer> negativeNum;
     Predicate<Integer> positiveNum;
     Predicate<Integer> evenNum;
@@ -18,24 +18,20 @@ public class CircularListTest {
 
     @BeforeEach
     public void setUp() {
-        list.add(0);
-        list.add(1);
-        list.add(2);
-        list.add(3);
+        sut = new CircularListImpl();
+        sut.add(0);
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
         negativeNum = (i) -> i < 0;
         positiveNum = (i) -> i > 0;
         evenNum = (i) -> i % 2 == 0;
         oddNum = (i) -> i % 2 != 0;
     }
 
-    @AfterEach
-    public void destroy() {
-        list = new CircularListImpl();
-    }
-
     @Test
     public void isNotEmpty() {
-        Assertions.assertFalse(list.isEmpty());
+        Assertions.assertFalse(sut.isEmpty());
     }
 
     @Test
@@ -51,37 +47,37 @@ public class CircularListTest {
 
     @Test
     public void next() {
-        Assertions.assertEquals(1, list.next().get());
-        Assertions.assertEquals(2, list.next().get());
-        Assertions.assertEquals(3, list.next().get());
-        Assertions.assertEquals(0, list.next().get());
+        Assertions.assertEquals(1, sut.next().get());
+        Assertions.assertEquals(2, sut.next().get());
+        Assertions.assertEquals(3, sut.next().get());
+        Assertions.assertEquals(0, sut.next().get());
     }
 
     @Test
     public void prev() {
-        Assertions.assertEquals(3, list.previous().get());
-        Assertions.assertEquals(2, list.previous().get());
-        Assertions.assertEquals(1, list.previous().get());
-        Assertions.assertEquals(0, list.previous().get());
+        Assertions.assertEquals(3, sut.previous().get());
+        Assertions.assertEquals(2, sut.previous().get());
+        Assertions.assertEquals(1, sut.previous().get());
+        Assertions.assertEquals(0, sut.previous().get());
     }
 
     @Test
     public void reset() {
-        list.next();
-        list.next();
-        list.reset();
-        Assertions.assertEquals(0, list.next().get());
-        Assertions.assertEquals(1, list.next().get());
-        Assertions.assertEquals(3, list.next().get());
+        sut.next();
+        sut.next();
+        sut.reset();
+        Assertions.assertEquals(0, sut.next().get());
+        Assertions.assertEquals(1, sut.next().get());
+        Assertions.assertEquals(3, sut.next().get());
     }
 
     @Test
     public void filteredNext() {
-        Assertions.assertEquals(Optional.empty(), list.filteredNext(negativeNum));
-        Assertions.assertEquals(1, list.filteredNext(positiveNum).get());
-        Assertions.assertEquals(3, list.filteredNext(oddNum).get());
-        Assertions.assertEquals(0, list.filteredNext(evenNum).get());
-        Assertions.assertEquals(2, list.filteredNext(evenNum).get());
+        Assertions.assertEquals(Optional.empty(), sut.filteredNext(negativeNum));
+        Assertions.assertEquals(1, sut.filteredNext(positiveNum).get());
+        Assertions.assertEquals(3, sut.filteredNext(oddNum).get());
+        Assertions.assertEquals(0, sut.filteredNext(evenNum).get());
+        Assertions.assertEquals(2, sut.filteredNext(evenNum).get());
 
     }
 }

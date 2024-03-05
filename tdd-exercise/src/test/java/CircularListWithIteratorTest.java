@@ -1,8 +1,5 @@
 import iterator.CircularListWithIteratorImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import tdd.CircularListImpl;
 
 import java.util.Iterator;
@@ -10,36 +7,31 @@ import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CircularListWithIteratorTest {
-    CircularListWithIteratorImpl list = new CircularListWithIteratorImpl();
+    CircularListWithIteratorImpl sut;
     Iterator<Optional> forwardIterator;
     Iterator<Optional> backwardIterator;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
-        list.add(0);
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        forwardIterator = list.forwardIterator();
-        backwardIterator = list.backwardIterator();
+        sut = new CircularListWithIteratorImpl();
+        sut.add(0);
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+        forwardIterator = sut.forwardIterator();
+        backwardIterator = sut.backwardIterator();
     }
 
     @Test
     public void isNotEmpty() {
-        Assertions.assertFalse(list.isEmpty());
+        Assertions.assertFalse(sut.isEmpty());
         Assertions.assertTrue(forwardIterator.hasNext());
         Assertions.assertTrue(backwardIterator.hasNext());
     }
 
     @Test
     public void add() {
-        CircularListImpl sut = new CircularListImpl();
-        sut.add(5);
-        sut.add(4);
-        sut.add(3);
-        sut.add(2);
-        sut.add(1);
-        Assertions.assertEquals(5, sut.size());
+        Assertions.assertEquals(4, sut.size());
     }
 
     @Test
